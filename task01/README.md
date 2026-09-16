@@ -136,7 +136,8 @@ RAG 的核心不是简单“收集和整理数据”，而是：
 最开始运行：
 
 ```powershell
-python --version```
+python --version
+```
 
 没有正常显示版本。
 
