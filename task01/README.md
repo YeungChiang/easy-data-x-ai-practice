@@ -136,4 +136,93 @@ RAG 的核心不是简单“收集和整理数据”，而是：
 最开始运行：
 
 ```powershell
+python --version```
+
+没有正常显示版本。
+
+进一步检查后发现，Windows 当前命中的只是 Microsoft Store 的应用执行别名，而不是完整 Python 环境。
+
+最终安装 Python 3.12.10（64-bit），并将 Python 加入 PATH，之后：
+
+```powershell
 python --version
+py --version
+python -m pip --version
+```
+
+均恢复正常。
+
+### 6.2 PowerShell 阻止虚拟环境激活脚本
+
+创建虚拟环境：
+
+```powershell
+python -m venv .venv
+```
+
+成功后执行：
+
+```powershell
+.\.venv\Scripts\Activate.ps1
+```
+
+被 PowerShell Execution Policy 拦截。
+
+为了不直接修改系统级安全策略，本次改为显式调用虚拟环境里的 Python：
+
+```powershell
+.\.venv\Scripts\python.exe
+```
+
+并继续完成依赖安装和课程脚本运行。
+
+### 6.3 GitHub 邮箱隐私导致第一次 Push 被拒绝
+
+第一次 Push 时，GitHub Desktop 提示 Commit 中包含被设置为私密的真实邮箱，因此拒绝上传。
+
+最终将 Git 提交邮箱改为 GitHub 提供的 `noreply` 邮箱，并重写尚未上传的首次 Commit 作者信息：
+
+```powershell
+git commit --amend --reset-author --no-edit
+```
+
+之后成功完成 Push。
+
+### 6.4 API 跑通，不代表模型回答一定正确
+
+同一个官方测试脚本连续运行两次，针对“什么是 RAG？”这个问题：
+
+- 第一次将 RAG 错误解释为 `Relevant Annotation Guidance`
+- 第二次才正确回答为 `Retrieval Augmented Generation`
+
+这次现象让我把 F1 中“大模型输出可能出现事实性错误和不稳定性”的概念变成了真实体验。
+
+因此后续做 Agent / RAG 应用时，我不能把“程序成功运行”等同于“结果可信”，还需要关注：
+
+- 数据质量
+- 上下文质量
+- 输出验证
+- 评测机制
+- 事实来源
+
+---
+
+## 7｜Task 01 阶段总结
+
+Task 01 对我最大的价值，不只是“安装好了 Python 和 Git”，而是第一次完整跑通了一套 AI 开发学习环境：
+
+> GitHub 课程代码 → 本地开发环境 → Python 虚拟环境 → API 配置 → 调用真实模型 → Git 版本管理 → GitHub 学习成果沉淀
+
+同时，我也开始把之前零散使用 AI 工具的经验，与 Agent、RAG、Memory、Skill、MCP 和 Context Engineering 等概念建立起关系。
+
+下一阶段进入 Task 02 后，希望继续从“会使用 AI 工具”向“理解 AI 应用为什么这样设计、如何落地”推进。
+
+---
+
+## 参考资料
+
+- Datawhale Easy Data × AI 官方仓库：  
+  https://github.com/datawhalechina/easy-data-x-ai
+
+- 在线课程：  
+  https://datawhalechina.github.io/easy-data-x-ai
