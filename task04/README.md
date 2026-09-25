@@ -70,9 +70,11 @@ Task 04 主要学习和实践：
 
 ```powershell
 .\.venv\Scripts\python.exe D2\d2_1_ingest.py
+```
+
 实际结果：
 
-```
+```text
 >>> 已删除旧的集合：d2_knowledge_base
 >>> 原始文档数：8
 >>> 切分后片段数：8
@@ -82,10 +84,10 @@ Task 04 主要学习和实践：
 
 这一实验完成了一个最小的数据入库链路：
 
-> 原始文档\
-> → Chunking\
-> → Metadata\
-> → Embedding / 索引\
+> 原始文档  
+> → Chunking  
+> → Metadata  
+> → Embedding / 索引  
 > → seekdb
 
 本次示例只有 8 条较短文档，所以切分后仍为 8 个片段。
@@ -281,10 +283,9 @@ version=4.2
 
 这让我第一次从实际代码中看到三种检索能力协同：
 
-> 语义检索 &#x20;
->
-> - 精确全文信号 &#x20;
-> - Metadata Filter
+- 语义检索；
+- 精确全文信号；
+- Metadata Filter。
 
 而不是所有问题都交给向量空间解决。
 
@@ -409,7 +410,7 @@ SILICONFLOW_API_KEY
 
 实际结果：
 
-| Chunking 策略 | 块数 | 平均长度  | Recall\@3 |
+| Chunking 策略 | 块数 | 平均长度  | Recall@3 |
 | ----------- | -- | ----- | --------- |
 | 固定 overlap  | 5  | 186 字 | 100%      |
 | 动态 overlap  | 6  | 185 字 | 80%       |
@@ -498,9 +499,9 @@ SILICONFLOW_API_KEY
 
 ---
 
-# 8｜I3：SQL × AI —— AI Functions
+## 8｜I3：SQL × AI —— AI Functions
 
-## 8.1 AI Function 和普通 SQL Function 的区别
+### 8.1 AI Function 和普通 SQL Function 的区别
 
 普通 SQL 函数例如：
 
@@ -558,7 +559,7 @@ AI_COMPLETE(...)
 
 ---
 
-# 10｜`AI_PROMPT` 真机实验
+## 10｜`AI_PROMPT` 真机实验
 
 执行：
 
@@ -590,7 +591,7 @@ SELECT AI_PROMPT(
 
 ---
 
-# 11｜注册 AI 逻辑模型与 Endpoint
+## 11｜注册 AI 逻辑模型与 Endpoint
 
 本次在 seekdb 中注册：
 
@@ -643,7 +644,7 @@ task04_embed_model
 
 ---
 
-# 12｜`AI_EMBED` 真机实验
+## 12｜`AI_EMBED` 真机实验
 
 实际执行：
 
@@ -701,7 +702,7 @@ JSON_LENGTH
 
 ---
 
-# 13｜Tool Use 与 AI Function 的区别
+## 13｜Tool Use 与 AI Function 的区别
 
 Task 02 中的 Tool Use：
 
@@ -745,9 +746,9 @@ SQL
 
 ---
 
-# 14｜AI Functions 的工程边界
+## 14｜AI Functions 的工程边界
 
-## 14.1 一条 SQL 不等于一次模型请求
+### 14.1 一条 SQL 不等于一次模型请求
 
 例如：
 
@@ -774,7 +775,7 @@ FROM documents;
 
 ---
 
-## 14.2 先过滤，再调用 AI
+### 14.2 先过滤，再调用 AI
 
 相比：
 
@@ -800,7 +801,7 @@ FROM documents;
 
 ---
 
-## 14.3 数据库事务不能撤销 AI 推理
+### 14.3 数据库事务不能撤销 AI 推理
 
 假设：
 
@@ -831,7 +832,7 @@ ROLLBACK
 
 ---
 
-## 14.4 更合理的是两阶段处理
+### 14.4 更合理的是两阶段处理
 
 例如：
 
@@ -859,7 +860,7 @@ ROLLBACK
 
 ---
 
-# 15｜哪些任务适合 SQL × AI
+## 15｜哪些任务适合 SQL × AI
 
 更适合的任务：
 
@@ -887,7 +888,7 @@ ROLLBACK
 
 ---
 
-# 16｜映射到注规学习 Agent
+## 16｜映射到注规学习 Agent
 
 Task 04 对注规学习 Agent 的直接启发，是开始把“知识库”进一步拆成真正的数据处理能力。
 
@@ -921,7 +922,7 @@ Task 04 对注规学习 Agent 的直接启发，是开始把“知识库”进�
 
 ---
 
-## 16.1 法规尤其需要混合检索
+### 16.1 法规尤其需要混合检索
 
 例如：
 
@@ -957,7 +958,7 @@ Rerank
 
 ---
 
-## 16.2 不同资料可能使用不同 Chunking
+### 16.2 不同资料可能使用不同 Chunking
 
 注规教材：
 
@@ -983,7 +984,7 @@ Rerank
 
 ---
 
-# 17｜Task 04 阶段总结
+## 17｜Task 04 阶段总结
 
 Task 03 让我理解：
 
