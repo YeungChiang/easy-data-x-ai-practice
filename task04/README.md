@@ -423,7 +423,7 @@ SILICONFLOW_API_KEY
 
 本次：
 
-> Recall\@3 = 100%
+> Recall@3 = 100%
 
 说明在当前这份小型结构化运维文档和 5 个测试 Query 中：
 
@@ -435,7 +435,7 @@ SILICONFLOW_API_KEY
 
 本次：
 
-> Recall\@3 = 80%
+> Recall@3 = 80%
 
 动态调整边界并没有在当前实验里超过固定 overlap。
 
@@ -445,7 +445,7 @@ SILICONFLOW_API_KEY
 
 本次：
 
-> Recall\@3 = 60%
+> Recall@3 = 60%
 
 但是父子 Chunk 的价值不能只看当前 Recall：
 
@@ -459,9 +459,9 @@ SILICONFLOW_API_KEY
 
 本次：
 
-> 只有 2 个 Chunk\
-> 平均 396 字\
-> Recall\@3 = 60%
+> 只有 2 个 Chunk  
+> 平均 396 字  
+> Recall@3 = 60%
 
 说明当前语义分块把多个内容合并成了较大的语义块。
 
@@ -482,7 +482,7 @@ SILICONFLOW_API_KEY
 - 一份小型文档；
 - 5 个 Query；
 - 当前 Embedding 模型；
-- Recall\@3 一个核心指标。
+- Recall@3 一个核心指标。
 
 因此真正的策略选择应该是：
 
@@ -1008,7 +1008,7 @@ Chunking 实验也让我看到：
 
 在当前小型测试集里：
 
-> 固定 overlap 的 Recall\@3 反而达到 100%。
+> 固定 overlap 的 Recall@3 反而达到 100%。
 
 因此真正重要的是：
 
@@ -1041,9 +1041,9 @@ I3 则进一步把我的理解从：
 ## 参考资料
 
 - Datawhale Easy Data × AI 官方仓库：\
-  [https://github.com/datawhalechina/easy-data-x-ai](https://github.com/datawhalechina/easy-data-x-ai?utm_source=chatgpt.com)
+  [https://github.com/datawhalechina/easy-data-x-ai](https://github.com/datawhalechina/easy-data-x-ai)
 - 在线课程：\
-  [https://datawhalechina.github.io/easy-data-x-ai](https://datawhalechina.github.io/easy-data-x-ai?utm_source=chatgpt.com)
+  [https://datawhalechina.github.io/easy-data-x-ai](https://datawhalechina.github.io/easy-data-x-ai?)
 - D2｜AI 应用的数据层：\
   [https://github.com/datawhalechina/easy-data-x-ai/blob/main/docs/dev/D2%20%E8%AF%BE%E7%A8%8B%E7%A8%BF%EF%BC%9AAI%20%E5%BA%94%E7%94%A8%E7%9A%84%E6%95%B0%E6%8D%AE%E5%B1%82.md](https://github.com/datawhalechina/easy-data-x-ai/blob/main/docs/dev/D2%20%E8%AF%BE%E7%A8%8B%E7%A8%BF%EF%BC%9AAI%20%E5%BA%94%E7%94%A8%E7%9A%84%E6%95%B0%E6%8D%AE%E5%B1%82.md)
 - I3｜SQL × AI —— AI Functions 的设计与执行：\
