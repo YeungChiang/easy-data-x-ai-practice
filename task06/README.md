@@ -11,7 +11,7 @@
 - Vector / Hybrid Retrieval 对比评测
 - seekdb 检索精度、延迟与成本 Benchmark
 - AI_EMBED 模型派生向量持久化实验
-- AI Column 当前公开版本能力边界验证
+- AI Column DDL 当前环境兼容性验证
 
 ## 2｜D3-1：建立知识库
 
@@ -40,10 +40,10 @@
 
 四个测试中：
 
-- 版本兼容问题：触发检索，但出现重复生成现象
+- 版本兼容问题：最终回答出现重复生成，未稳定给出完整结论
 - E-4012：正确回答
 - 2024 Q3 营收：正确回答
-- 天气闲聊：没有使用产品知识库
+- 天气闲聊：回答表现符合“不需要检索”的预期
 
 这让我认识到：
 
@@ -192,98 +192,155 @@ SELECT JSON_LENGTH(
     'Agentic RAG combines agent decision making with knowledge retrieval.'
   )
 );
+```
 
 实际：
-1024
+
+`1024`
+
 说明数据库可以通过 SQL 直接调用外部 Embedding 模型。
-8.3 模型派生向量持久化
+
+### 8.3 模型派生向量持久化
+
 建立：
+
+```sql
 content VARCHAR(1000),
 embedding VECTOR(1024)
+```
 
 然后：
+
+```sql
 INSERT ... AI_EMBED(...)
+```
 
 实际：
-- embedding_is_null = 0
-- dimensions = 1024
+
+- `embedding_is_null = 0`
+- `dimensions = 1024`
+
 完成了：
-文本
-→ AI_EMBED
-→ SiliconFlow
-→ BAAI/bge-m3
-→ 1024 维向量
+
+文本  
+→ AI_EMBED  
+→ SiliconFlow  
+→ BAAI/bge-m3  
+→ 1024 维向量  
 → seekdb 持久化
-8.4 为什么需要 AI Column
+
+### 8.4 为什么需要 AI Column
+
 只修改：
+
+```sql
 UPDATE ... SET content='The source content has changed.'
+```
 
 之后：
+
 - content 已变化
 - embedding 仍然存在
 - dimensions 仍然是 1024
+
 普通列不会知道 embedding 已经属于旧版本文本。
+
 因此应用层必须自行维护：
-- 依赖关系；
-- 失效；
-- 重算；
-- 重试；
-- 版本；
-- 并发一致性。
+
+- 依赖关系
+- 失效
+- 重算
+- 重试
+- 版本
+- 并发一致性
+
 AI Column 要解决的正是这套问题。
-8.5 当前版本能力边界
+
+### 8.5 当前版本能力边界
+
 课程稿中的：
+
+```sql
 VECTOR(1024) AI COLUMN (
   AI_EMBED(...)
 )
+```
 
-在当前：
-seekdb-v1.4.0.0
-且已经确认使用当前：
-oceanbase/seekdb:latest
-的环境中实际返回：
-ERROR 1064
+在本次实测环境：
+
+`seekdb-v1.4.0.0`
+
+且已经确认运行镜像与 2026-10-01 当时的：
+
+`oceanbase/seekdb:latest`
+
+一致。
+
+实际执行返回：
+
+`ERROR 1064`
+
 因此本次不声称已经成功创建 AI Column。
-这一实践也提醒我：
-课程概念、文档语法和实际发布版本之间可能存在时间差，实验记录必须以真实运行结果为准。
 
-9｜本阶段核心理解
-9.1 Agentic RAG
+这一实践也提醒我：
+
+> 课程概念、文档语法和实际发布版本之间可能存在时间差，实验记录还是要以真实运行结果为准。
+
+## 9｜本阶段核心理解
+
+### 9.1 Agentic RAG
+
 传统 RAG：
-固定流程
-→ 每个问题都检索
+
+固定流程  
+→ 每个问题都检索  
 → 再生成
+
 Agentic RAG：
-Agent
-→ 判断是否检索
-→ 选择工具
-→ 获取证据
-→ 判断是否继续
+
+Agent  
+→ 判断是否检索  
+→ 选择工具  
+→ 获取证据  
+→ 判断是否继续  
 → 最终回答
-9.2 Retrieval
+
+### 9.2 Retrieval
+
 不能把 Vector Search 当成唯一答案。
+
 真实知识系统通常需要：
-Vector
-- Full-text
+
+- Vector Search
+- Full-text Search
 - Metadata Filter
 - Hybrid Fusion
 - Evaluation
-9.3 AI Native 数据系统
+
+### 9.3 AI Native 数据系统
+
 AI 不仅可以位于应用层。
+
 它还可以逐步进入：
-SQL Function
-→ 数据派生
-→ 检索
-→ 索引
+
+SQL Function  
+→ 数据派生  
+→ 检索  
+→ 索引  
 → 数据生命周期
+
 但 AI 派生数据不能自动成为事实源。
+
 在我的 Personal AI OS 中，我会继续坚持：
-原始事实 / 权威数据源
-高于
-AI 派生结果。
+
+> 原始事实 / 权威数据源  
+> 高于  
+> AI 派生结果。
 
 AI 生成的摘要、标签、Embedding 或记忆，本质上仍属于派生数据，需要保留来源、版本和生成条件。
-10｜参考资料
+
+## 10｜参考资料
+
 - Datawhale Easy Data × AI
 - D3：Agentic RAG 实战
 - I5：AI 列 —— 模型驱动派生数据的自动维护
