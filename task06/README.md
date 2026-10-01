@@ -1,4 +1,4 @@
-# Task 06｜Agentic RAG 实战与 AI Column 能力边界验证
+# Task 06｜Agentic RAG 与 AI Column 实践记录
 
 > Datawhale《Easy Data × AI：构建知识与记忆驱动的 Agent》
 > 状态：✅ 已完成
@@ -31,12 +31,7 @@
 
 完成：
 
-问题
-→ Agent 判断是否需要检索
-→ Tool Call
-→ seekdb Hybrid Search
-→ Tool Result
-→ LLM 生成最终回答
+问题 → Agent 判断是否需要检索 → Tool Call → seekdb Hybrid Search → Tool Result → LLM 生成最终回答
 
 四个测试中：
 
